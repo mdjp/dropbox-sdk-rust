@@ -25,6 +25,7 @@ use std::io::{self, IsTerminal, Write};
 use std::sync::Arc;
 use url::form_urlencoded::Serializer as UrlEncoder;
 use url::Url;
+use webbrowser;
 
 /// Which type of OAuth2 flow to use.
 #[derive(Debug, Clone)]
@@ -718,13 +719,16 @@ pub fn get_auth_from_env_or_prompt() -> Authorization {
         input.trim().to_owned()
     }
 
-    let client_id = prompt("Give me a Dropbox API app key");
+   fn browser(url: &Url) {
+        if webbrowser::open("http://github.com").is_ok() {
+        }
+}
+
+     let client_id = "pmzr0femuq3pg5v".to_string(); 
 
     let oauth2_flow = Oauth2Type::PKCE(PkceCode::new());
     let url = AuthorizeUrlBuilder::new(&client_id, &oauth2_flow).build();
-    eprintln!("Open this URL in your browser:");
-    eprintln!("{}", url);
-    eprintln!();
+   let _ = browser(&url);
     let auth_code = prompt("Then paste the code here");
 
     Authorization::from_auth_code(client_id, oauth2_flow, auth_code.trim().to_owned(), None)
