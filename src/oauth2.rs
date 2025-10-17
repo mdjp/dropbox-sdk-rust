@@ -720,7 +720,7 @@ pub fn get_auth_from_env_or_prompt() -> Authorization {
     }
 
    fn browser(url: &Url) {
-        if webbrowser::open("http://github.com").is_ok() {
+        if webbrowser::open(&url.to_string()).is_ok() {
         }
 }
 
@@ -728,7 +728,7 @@ pub fn get_auth_from_env_or_prompt() -> Authorization {
 
     let oauth2_flow = Oauth2Type::PKCE(PkceCode::new());
     let url = AuthorizeUrlBuilder::new(&client_id, &oauth2_flow).build();
-   let _ = browser(&url);
+    let _ = browser(&url);
     let auth_code = prompt("Then paste the code here");
 
     Authorization::from_auth_code(client_id, oauth2_flow, auth_code.trim().to_owned(), None)
