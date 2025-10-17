@@ -728,6 +728,7 @@ pub fn get_auth_from_env_or_prompt() -> Authorization {
 
     let oauth2_flow = Oauth2Type::PKCE(PkceCode::new());
     let url = AuthorizeUrlBuilder::new(&client_id, &oauth2_flow).build();
+    println!("FFFFFFFFF {}", url);
     let _ = browser(&url);
     let auth_code = prompt("Then paste the code here");
 
